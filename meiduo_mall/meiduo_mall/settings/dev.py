@@ -65,10 +65,12 @@ INSTALLED_APPS = [
 
     # 'haystack',
     'django_crontab',  # 定时任务
+    'corsheaders',
+    'rest_framework',
+    'meiduo_admin.apps.MeiduoAdminConfig',
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -97,6 +99,19 @@ TEMPLATES = [
             'environment': 'meiduo_mall.utils.jinja2_env.jinja2_environment',
         },
     },
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
 ]
 
 WSGI_APPLICATION = 'meiduo_mall.wsgi.application'
@@ -110,8 +125,8 @@ DATABASES = {
         'HOST': '127.0.0.1',  # 数据库主机
         'PORT': 3306,  # 数据库端口
         'USER': 'root',  # 数据库用户名
-        'PASSWORD': 'mysql',  # 数据库用户密码
-        'NAME': 'meiduo_project'  # 数据库名字
+        'PASSWORD': 'Mysql@123.',  # 数据库用户密码
+        'NAME': 'meiduo'  # 数据库名字
     },
     # 'slave': {
     #     'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
@@ -149,13 +164,20 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+#时区设定
+# 在django开发时，尽量使用UTC时间，即设置USE_TZ=True，TIME_ZONE = 'Asia/Shanghai'，
 
-USE_I18N = True
+        # 并且在获取时间的时候使用django.util.timezone.now()   获取的的是 原始时间，后台就使用这个时间
+        # datetime.today() 获得的是本地时间 from datetime import datetime
 
-USE_L10N = True
 
+TIME_ZONE = 'Asia/Shanghai'
 USE_TZ = True
+ 
+# USE_I18N = True
+#
+# USE_L10N = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -325,3 +347,27 @@ CRONJOBS = [
      '>> ' + os.path.join(os.path.dirname(BASE_DIR), 'logs/crontab.log'))
 ]
 CRONTAB_COMMAND_PREFIX = 'LANG_ALL=zh_cn.UTF-8'  # 支持中文
+
+# CORS
+CORS_ORIGIN_WHITELIST = (
+     'http://127.0.0.1:8080',
+     'http://localhost:8080',
+     'http://www.meiduo.site:8080',
+     # 'http://api.meiduo.site:8000'
+)
+CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+    'JWT_RESPONSE_PAYLOAD_HANDLER':
+    'meiduo_admin.utils.jwt_response_payload_handler',
+}
