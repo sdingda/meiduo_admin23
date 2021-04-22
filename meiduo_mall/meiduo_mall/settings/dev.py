@@ -306,7 +306,7 @@ EMAIL_FROM = '美多商城<hmmeiduo@163.com>'  # 发件人抬头
 EMAIL_VERIFY_URL = 'http://www.meiduo.site:8000/emails/verification/'
 
 # fdfs的访问域名
-# FDFS_URL = 'http://image.meiduo.site:8888/'
+FDFS_URL = 'http://image.meiduo.site:8888/'
 # 指定文件存储类型
 DEFAULT_FILE_STORAGE = 'meiduo_mall.utils.fdfs.storage.FdfsStorage'
 
@@ -371,3 +371,14 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER':
     'meiduo_admin.utils.jwt_response_payload_handler',
 }
+
+
+
+
+
+
+
+
+
+
+

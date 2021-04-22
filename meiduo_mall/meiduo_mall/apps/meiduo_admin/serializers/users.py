@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from users.models import User
-
+import re
 
 class UserSerializer(serializers.ModelSerializer):
     """user's ser"""
@@ -23,6 +23,12 @@ class UserSerializer(serializers.ModelSerializer):
             },
 
         }
+
+    def validate_mobile(self,value):
+        if not re.match(r'1[3-9]\d{9}',value):
+            raise serializers.ValidationError('error format of mobile num ')
+        return value
+
 
     def create(self, validated_data):
         """ rewrite the way encrypted the password """
