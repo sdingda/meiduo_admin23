@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework.routers import DefaultRouter
-from meiduo_admin.views import statistical, users, specs, images
+from meiduo_admin.views import statistical, users, specs, images, skus
 
 urlpatterns = [
     # 登录路由
@@ -41,6 +41,40 @@ router = DefaultRouter()
 router.register('skus/images', images.ImagesView, basename='images')
 # print(router.urls)
 urlpatterns += router.urls
+
+
+# -------sku 路由------
+router = DefaultRouter()
+router.register('skus', skus.SKUView, basename='skus')
+print(router.urls)
+urlpatterns += router.urls
+
+#
+# [
+# <URLPattern '^skus/$' [name='skus-list']>,
+# <URLPattern '^skus\.(?P<format>[a-z0-9]+)/?$' [name='skus-list']>,
+# <URLPattern '^skus/categories/$' [name='skus-categories']>,
+# <URLPattern '^skus/categories\.(?P<format>[a-z0-9]+)/?$' [name='skus-categories']>,
+# <URLPattern '^skus/(?P<pk>[^/.]+)/$' [name='skus-detail']>,
+# <URLPattern '^skus/(?P<pk>[^/.]+)\.(?P<format>[a-z0-9]+)/?$' [name='skus-detail']>,
+# <URLPattern '^$' [name='api-root']>,
+# <URLPattern '^\.(?P<format>[a-z0-9]+)/?$' [name='api-root']>
+# ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

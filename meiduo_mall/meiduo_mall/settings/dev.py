@@ -164,16 +164,16 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-#时区设定
+# 时区设定
 # 在django开发时，尽量使用UTC时间，即设置USE_TZ=True，TIME_ZONE = 'Asia/Shanghai'，
 
-        # 并且在获取时间的时候使用django.util.timezone.now()   获取的的是 原始时间，后台就使用这个时间
-        # datetime.today() 获得的是本地时间 from datetime import datetime
+# 并且在获取时间的时候使用django.util.timezone.now()   获取的的是 原始时间，后台就使用这个时间
+# datetime.today() 获得的是本地时间 from datetime import datetime
 
 
 TIME_ZONE = 'Asia/Shanghai'
 USE_TZ = True
- 
+
 # USE_I18N = True
 #
 # USE_L10N = True
@@ -305,10 +305,22 @@ EMAIL_FROM = '美多商城<hmmeiduo@163.com>'  # 发件人抬头
 # 邮箱验证链接
 EMAIL_VERIFY_URL = 'http://www.meiduo.site:8000/emails/verification/'
 
+# FastDFS相关参数
+
 # fdfs的访问域名
-FDFS_URL = 'http://image.meiduo.site:8888/'
+FDFS_BASE_URL = 'http://image.meiduo.site:8888/'
 # 指定文件存储类型
 DEFAULT_FILE_STORAGE = 'meiduo_mall.utils.fdfs.storage.FdfsStorage'
+
+FASTDFS_PATH = os.path.join(BASE_DIR, 'utils/fdfs/client.conf')
+
+
+
+
+
+# FDFS_BASE_URL = 'http://10.211.55.12:8888/'
+# FDFS_BASE_URL = 'http://10.211.55.12:8888/'
+
 
 # Haystack
 # HAYSTACK_CONNECTIONS = {
@@ -318,15 +330,14 @@ DEFAULT_FILE_STORAGE = 'meiduo_mall.utils.fdfs.storage.FdfsStorage'
 #         'INDEX_NAME': 'meiduo_tbd39',  # Elasticsearch建立的索引库的名称
 #     },
 # }
-# FastDFS相关参数
-FDFS_BASE_URL = 'http://192.168.120.130:8888/'
+
 
 # Haystack
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': 'http://192.168.120.130:9200/', # Elasticsearch服务器ip地址，端口号固定为9200
-        'INDEX_NAME': 'meiduo_mall', # Elasticsearch建立的索引库的名称
+        'URL': 'http://192.168.120.130:9200/',  # Elasticsearch服务器ip地址，端口号固定为9200
+        'INDEX_NAME': 'meiduo_mall',  # Elasticsearch建立的索引库的名称
     },
 }
 # 当添加、修改、删除数据时，自动生成索引
@@ -350,13 +361,12 @@ CRONTAB_COMMAND_PREFIX = 'LANG_ALL=zh_cn.UTF-8'  # 支持中文
 
 # CORS
 CORS_ORIGIN_WHITELIST = (
-     'http://127.0.0.1:8080',
-     'http://localhost:8080',
-     'http://www.meiduo.site:8080',
-     # 'http://api.meiduo.site:8000'
+    'http://127.0.0.1:8080',
+    'http://localhost:8080',
+    'http://www.meiduo.site:8080',
+    # 'http://api.meiduo.site:8000'
 )
 CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -369,16 +379,5 @@ REST_FRAMEWORK = {
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
     'JWT_RESPONSE_PAYLOAD_HANDLER':
-    'meiduo_admin.utils.jwt_response_payload_handler',
+        'meiduo_admin.utils.jwt_response_payload_handler',
 }
-
-
-
-
-
-
-
-
-
-
-
